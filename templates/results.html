@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Librerest</title>
+    <style>
+        body {
+            background: #151515;
+            color: navajowhite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-family: sans-serif;
+            scrollbar-color: gray #151515;
+        }
+
+        .grid-container {
+            columns: 5 200px;
+            column-gap: 1.5rem;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .grid-container div {
+            width: 150px;
+            margin: 0 1.5rem 1.5rem 0;
+            display: inline-block;
+            width: 100%;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .grid-container div img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        input#search {
+            all: unset;
+            background: #222;
+            color: #fff;
+            padding: 0.7rem 1rem;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            max-width: 100vw;
+            gap: 1rem;
+            margin-left: 10px;
+        }
+
+        .search {
+            width: 500px;
+            flex-grow: 1;
+            position: relative;
+            display: flex;
+        }
+
+        button[type="submit"] {
+            all: unset;
+            position: absolute;
+            right: 4px;
+            top: 5px;
+            height: 30px;
+            width: 30px;
+            color: #888;
+            background-color: #222;
+            cursor: pointer;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="search-container">
+        <h1><a href="/">Librerest</a></h1>
+        <form action="/search/pins/" method="GET" class="search">
+            <input id="search" type="text" name="q" placeholder="Search for the roman empire, linux memes, etc."
+                required />
+            <button type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-search">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="m21 21-4.3-4.3" />
+                </svg></button>
+        </form>
+    </div>
+
+    <div class="grid-container">
+        {{range .Images}}
+        <div>
+            <img src="{{.}}" alt="Image" />
+        </div>
+        {{end}}
+    </div>
+
+    {{ if .Bookmark }}
+    <div class="pagination-container">
+        <h2 style="text-align: center;">
+            <a href="/search/pins/?q={{ .Query }}&bookmark={{ .Bookmark }}">Next page</a>
+            <!--<a href="/search/pins/?q={{ .Query }}&bookmark={{ .Bookmark }}&csrftoken={{ .CSRFToken }}">Next page</a>-->
+        </h2>
+    </div>
+    {{ end }}
+</body>
+
+</html>
